@@ -2,6 +2,16 @@
 #define OPEN_THERM_TYPES_H
 #include <stdint.h>
 
+typedef enum OTFrameMsgType {
+  READ_DATA = 0b000,
+  WRITE_DATA = 0b001,
+  INVALID_DATA = 0b010,
+  RESERVED = 0b011,
+  READ_ACK = 0b100,
+  WRITE_ACK = 0b101,
+  DATA_INVALID = 0b110,
+  UNKNOWN_DATAID = 0b111
+};
 /** Master Slave Status */
 typedef struct OTDataMSStatus {
   struct {
@@ -86,7 +96,7 @@ typedef union OTFrame {
   struct {
     /** Parity bit */
     uint8_t parity : 1;
-    uint8_t msg_type : 3;
+    OTFrameMsgType msg_type : 3;
     uint8_t spares : 4;
     uint8_t data_id : 8;
     OTDataValue data_value;
